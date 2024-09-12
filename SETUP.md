@@ -37,10 +37,12 @@ It doesn't assign container name (that's wanted) so it is needed to check name o
 enter container and then install `torch2trt` from github repo (as stated above). 
 
 
+### Hacks/Solutions
 
-
+Problem with `import trt_pose.plugins` can be solved using following [link](https://github.com/NVIDIA-AI-IOT/trt_pose/issues/2). 
 
 # TODO: 
 - [x] Explore [jetson containers](https://github.com/dusty-nv/jetson-containers)
-- [ ] Run contaier from `jetson-containers`
+- [x] Run contaier from `jetson-containers`
 - [ ] Check `trt_pose` demo in ROS node
+- [ ] Create Dockerfile that's used to setup correct env for HPE on Jetson 

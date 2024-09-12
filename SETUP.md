@@ -1,5 +1,6 @@
 # Setup 
 
+## Manual installation
 How to setup trt_pose for Jetson Orin Nx. 
 
 1. Check Jetpack version. 
@@ -7,10 +8,39 @@ How to setup trt_pose for Jetson Orin Nx.
 sudo apt-cache show nvidia-jetpack
 ```
 2. Install corresponding pytorch following this [link](https://forums.developer.nvidia.com/t/pytorch-for-jetson/72048) 
+```
+sudo apt-get install python3-pip libopenblas-dev
+pip install <wheel-name>
+```
+or after installing python run: 
+```
+pip3 install torch torchvision
+```
+3. After installing torch and torchvision, install [torch_2_trt](https://github.com/NVIDIA-AI-IOT/torch2trt)
+```
+git clone git@github.com:NVIDIA-AI-IOT/torch2trt.git
+pip3 install packaging
+<set CUDA_HOME var to the location of your cuda installation [export CUDA_HOME=/usr/lib/aarch64-linux-gnu/]>
+python3 setup.py install --plugins
+```
+** NOT SUCCESSFUL --> FOR NOW ** 
+
+## jetson-containers 
+
+Download [jetson-containers](https://github.com/dusty-nv/jetson-containers/tree/master). 
+
+Run exemplary jetson container
+```
+jetson-containers run $(autotag l4t-pytorch)
+```
+It doesn't assign container name (that's wanted) so it is needed to check name of the container: 
+enter container and then install `torch2trt` from github repo (as stated above). 
+
 
 
 
 
 # TODO: 
-- [ ] Explore [jetson containers](https://github.com/dusty-nv/jetson-containers)
-
+- [x] Explore [jetson containers](https://github.com/dusty-nv/jetson-containers)
+- [ ] Run contaier from `jetson-containers`
+- [ ] Check `trt_pose` demo in ROS node

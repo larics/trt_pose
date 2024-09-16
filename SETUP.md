@@ -36,6 +36,27 @@ jetson-containers run $(autotag l4t-pytorch)
 It doesn't assign container name (that's wanted) so it is needed to check name of the container: 
 enter container and then install `torch2trt` from github repo (as stated above). 
 
+After running jetson-containers (remove `rm` flag in the command), 
+build `trt_pose` and build `torch2trt`. 
+
+First install `torch2trt` as follows: 
+```
+git clone https://github.com/NVIDIA-AI-IOT/torch2trt.git
+cd torch2trt
+python3 setup.py install 
+python3 setup.py install --plugins
+```
+After installing torch2trt install `trt_pose`: 
+
+```
+git clone https://github.com/NVIDIA-AI-IOT/trt_pose.git 
+python3 setup.py install 
+```
+Install `notebook` and `tqdm`
+```
+pip install notebook tqdm pycocotools
+```
+Follow `README.md` from `trt_pose` to see where to put weights of an NN.  
 
 ### Hacks/Solutions
 
@@ -45,4 +66,6 @@ Problem with `import trt_pose.plugins` can be solved using following [link](http
 - [x] Explore [jetson containers](https://github.com/dusty-nv/jetson-containers)
 - [x] Run contaier from `jetson-containers`
 - [ ] Check `trt_pose` demo in ROS node
-- [ ] Create Dockerfile that's used to setup correct env for HPE on Jetson 
+- [x] Create Dockerfile that's used to setup correct env for HPE on Jetson --> Not possible 
+- [ ] Create script that set ups fast from jetson-containers base image
+

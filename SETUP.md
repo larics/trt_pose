@@ -66,6 +66,9 @@ Problem with `import trt_pose.plugins` can be solved using following [link](http
 - [x] Explore [jetson containers](https://github.com/dusty-nv/jetson-containers)
 - [x] Run contaier from `jetson-containers`
 - [ ] Check `trt_pose` demo in ROS node
+- [ ] Add `trt_pose` to ROS node 
+- [ ] Test ROS 2 humble container
+- [ ] Add `trt_hand_pose`
 - [x] Create Dockerfile that's used to setup correct env for HPE on Jetson --> Not possible 
-- [ ] Create script that set ups fast from jetson-containers base image
+- [x] Create script that set ups fast from jetson-containers base image `setup.sh`
 

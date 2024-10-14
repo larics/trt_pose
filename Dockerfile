@@ -1,24 +1,32 @@
 FROM dustynv/l4t-pytorch:r35.3.1
 
-LABEL maintainer filip.zoric@fer.hr 
+LABEL maintainer=filip.zoric@fer.hr 
 
-RUN apt-get install curl 
+RUN apt-get install -y \
+    curl \
+    lsb-release
 
-# Build and install OpenCV
-RUN git clone git@github.com:opencv/opencv.git
-RUN mkdir build
-WORKDIR /opencv/build
-RUN cmake .. 
-RUN cmake --build . 
-RUN make install 
+# Remove opencv
+RUN apt-get purge -y '*opencv*'
 
 # Install ROS
-RUN sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
+RUN sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
 RUN curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | sudo apt-key add -
 RUN apt-get update 
-RUN apt-get install ros-noetic-desktop 
+RUN apt-get install -y \
+    ros-noetic-ros-base
 
-# Install trt_pose, torch2trt
-COPY ./setup.sh /root/setup.sh
+# Install torch2trt
 WORKDIR /root
-RUN bash -c "./setup.sh"
+RUN git clone https://github.com/NVIDIA-AI-IOT/torch2trt.git
+WORKDIR /root/torch2trt
+RUN python3 setup.py install 
+RUN python3 setup.py install --plugins
+
+# Install trt_pose
+WORKDIR /root
+RUN git clone https://github.com/NVIDIA-AI-IOT/trt_pose.git 
+WORKDIR /root/trt_pose
+RUN python3 setup.py install 
+
+

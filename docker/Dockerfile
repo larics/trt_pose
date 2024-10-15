@@ -28,7 +28,7 @@ WORKDIR /root
 RUN git clone https://github.com/larics/trt_pose.git 
 WORKDIR /root/trt_pose
 RUN python3 setup.py install 
-RUN cp /root/trt_pose/build/lib.linux-aarch64-cpython-38/trt_pose/plugins.cpython-38-aarch64-linux-gnu.so /root/trt_pose/
+RUN cp /root/trt_pose/build/lib.linux-aarch64-cpython-38/trt_pose/plugins.cpython-38-aarch64-linux-gnu.so /root/trt_pose/trt_pose/
 
 # Install jupyter notebook - DEV
 RUN pip install notebook tqdm pycocotools

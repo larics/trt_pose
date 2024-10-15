@@ -14,7 +14,9 @@ RUN sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) 
 RUN curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | sudo apt-key add -
 RUN apt-get update 
 RUN apt-get install -y \
-    ros-noetic-ros-base
+    ros-noetic-ros-base \
+    ros-noetic-camera-info-manager \
+    ros-noetic-image-transport
 
 # Install torch2trt
 WORKDIR /root
@@ -46,6 +48,7 @@ RUN bash -c "source /opt/ros/noetic/setup.bash; catkin build"
 # Build hpe_ros_pkg
 WORKDIR /root/catkin_ws/src 
 RUN git clone https://github.com/larics/hpe_ros_package.git 
+RUN git clone https://github.com/fzoric/usb_cam.git
 RUN bash -c "source /opt/ros/noetic/setup.bash; source /root/catkin_ws/devel/setup.bash; catkin build" 
 RUN echo "source /opt/ros/noetic/setup.bash" >> /root/.bashrc
 RUN echo "source /root/catkin_ws/devel/setup.bash"

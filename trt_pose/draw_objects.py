@@ -8,6 +8,7 @@ class DrawObjects(object):
         self.topology = topology
         
     def __call__(self, image, object_counts, objects, normalized_peaks):
+        dets_ = []
         topology = self.topology
         height = image.shape[0]
         width = image.shape[1]
@@ -26,6 +27,7 @@ class DrawObjects(object):
                     x = round(float(peak[1]) * width)
                     y = round(float(peak[0]) * height)
                     cv2.circle(image, (x, y), 3, color, 2)
+                dets_.append([x, y])
 
             for k in range(K):
                 c_a = topology[k][2]
@@ -38,6 +40,8 @@ class DrawObjects(object):
                     x1 = round(float(peak1[1]) * width)
                     y1 = round(float(peak1[0]) * height)
                     cv2.line(image, (x0, y0), (x1, y1), color, 2)
+        
+        return dets_
 
 
 class DrawPILObjects(object): 
@@ -47,6 +51,7 @@ class DrawPILObjects(object):
         self.topology = topology
         
     def __call__(self, image, object_counts, objects, normalized_peaks):
+        dets_ = []
         image = numpy.array(image)
         image = image[:, :, ::-1].copy()
         topology = self.topology
@@ -67,6 +72,7 @@ class DrawPILObjects(object):
                     x = round(float(peak[1]) * width)
                     y = round(float(peak[0]) * height)
                     cv2.circle(image, (x, y), 3, color, 2)
+                    dets_.append([x, y])
 
             for k in range(K):
                 c_a = topology[k][2]
@@ -80,4 +86,4 @@ class DrawPILObjects(object):
                     y1 = round(float(peak1[0]) * height)
                     cv2.line(image, (x0, y0), (x1, y1), color, 2)
 
-        return image
+        return image, dets_
